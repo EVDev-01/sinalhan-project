@@ -39,7 +39,7 @@ const App = () => {
       },
       {
         id: 3,
-        title: "DOST Scholarship renewal requirements 2024?",
+        title: "DOST Scholarship renewal requirements 2026?",
         content: "My DOST scholarship is up for renewal. What are the updated requirements and GWA needed to maintain it?",
         author: "Anonymous Iskolar",
         tags: ["scholarship", "DOST", "financial-aid"],
@@ -73,7 +73,7 @@ const App = () => {
     "engineering", "business", "deadlines", "requirements", "registration"
   ];
 
-  const campuses = ["All Campuses", "Main Campus", "South Campus", "North Campus"];
+  const campuses = ["All Campuses", "Main Campus", "Santa Rosa Campus", "Biñan Campus", "San Pedro Campus", "Calauan Campus"];
 
   // Vote handler
   const handleVote = (questionId, direction) => {
@@ -83,7 +83,7 @@ const App = () => {
       }
       return q;
     }));
-    
+
     if (selectedQuestion && selectedQuestion.id === questionId) {
       setSelectedQuestion({
         ...selectedQuestion,
@@ -125,16 +125,16 @@ const App = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
-            <button 
+            <button
               onClick={() => setCurrentPage('dashboard')}
               className="flex items-center space-x-2"
             >
               <BookOpen className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">Iskolar Overflow</span>
+              <span className="text-xl font-bold text-gray-900">Iskolar Overflow QNA</span>
             </button>
-            
+
             <div className="hidden md:flex space-x-6">
-              <button 
+              <button
                 onClick={() => setCurrentPage('dashboard')}
                 className="text-gray-700 hover:text-blue-600 font-medium"
               >
@@ -147,7 +147,7 @@ const App = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button 
+            <button
               onClick={() => setCurrentPage('ask')}
               className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
             >
@@ -164,9 +164,9 @@ const App = () => {
   const Dashboard = () => {
     const filteredQuestions = questions.filter(q => {
       const matchesSearch = q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           q.content.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTags = selectedTags.length === 0 || 
-                         selectedTags.some(tag => q.tags.includes(tag));
+        q.content.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTags = selectedTags.length === 0 ||
+        selectedTags.some(tag => q.tags.includes(tag));
       return matchesSearch && matchesTags;
     });
 
@@ -203,11 +203,10 @@ const App = () => {
                           setSelectedTags([...selectedTags, tag]);
                         }
                       }}
-                      className={`block w-full text-left px-3 py-2 rounded text-sm transition ${
-                        selectedTags.includes(tag)
+                      className={`block w-full text-left px-3 py-2 rounded text-sm transition ${selectedTags.includes(tag)
                           ? 'bg-blue-100 text-blue-700 font-medium'
                           : 'hover:bg-gray-100 text-gray-700'
-                      }`}
+                        }`}
                     >
                       {tag}
                     </button>
@@ -231,14 +230,14 @@ const App = () => {
                   <h2 className="text-2xl font-bold text-gray-900">
                     {filteredQuestions.length} Questions
                   </h2>
-                  <button 
+                  <button
                     onClick={() => setCurrentPage('ask')}
                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
                   >
                     Ask Question
                   </button>
                 </div>
-                
+
                 <div className="relative">
                   <Search className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" />
                   <input
@@ -282,7 +281,7 @@ const App = () => {
 
   // Question Card Component
   const QuestionCard = ({ question }) => (
-    <div 
+    <div
       onClick={() => {
         setSelectedQuestion(question);
         setCurrentPage('question-detail');
@@ -310,7 +309,7 @@ const App = () => {
             {question.title}
           </h3>
           <p className="text-gray-700 mb-4 line-clamp-2">{question.content}</p>
-          
+
           <div className="flex flex-wrap gap-2 mb-3">
             {question.tags.map(tag => (
               <span key={tag} className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">
@@ -352,7 +351,7 @@ const App = () => {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <button 
+          <button
             onClick={() => setCurrentPage('dashboard')}
             className="text-blue-600 hover:text-blue-700 mb-6 flex items-center font-medium"
           >
@@ -363,7 +362,7 @@ const App = () => {
           <div className="bg-white rounded-lg shadow p-8 mb-6">
             <div className="flex gap-6">
               <div className="flex flex-col items-center space-y-4">
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleVote(selectedQuestion.id, 'up');
@@ -373,7 +372,7 @@ const App = () => {
                   <ChevronUp className="w-6 h-6 text-gray-600 hover:text-blue-600" />
                 </button>
                 <span className="text-2xl font-bold text-gray-900">{selectedQuestion.votes}</span>
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleVote(selectedQuestion.id, 'down');
@@ -562,12 +561,13 @@ const App = () => {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option>General</option>
-                  <option>Computer Science</option>
+                  <option>Information Technology</option>
                   <option>Engineering</option>
                   <option>Business</option>
-                  <option>Arts & Sciences</option>
+                  <option>Accounting</option>
+                  <option>Entrepreneurship</option>
                   <option>Education</option>
-                  <option>Medicine</option>
+                  <option>Psychology</option>
                 </select>
               </div>
             </div>
@@ -588,11 +588,10 @@ const App = () => {
                         setTags([...tags, tag]);
                       }
                     }}
-                    className={`px-3 py-1 rounded-full text-sm transition ${
-                      tags.includes(tag)
+                    className={`px-3 py-1 rounded-full text-sm transition ${tags.includes(tag)
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    } ${tags.length >= 5 && !tags.includes(tag) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      } ${tags.length >= 5 && !tags.includes(tag) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     disabled={tags.length >= 5 && !tags.includes(tag)}
                   >
                     {tag}
@@ -638,7 +637,7 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+
       {currentPage === 'dashboard' && <Dashboard />}
       {currentPage === 'question-detail' && <QuestionDetail />}
       {currentPage === 'ask' && <AskQuestionPage />}
