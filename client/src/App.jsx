@@ -1,11 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Search, ChevronDown, ChevronUp, MessageSquare, Award, Shield, TrendingUp, BookOpen, Users, FileText, AlertCircle, CheckCircle, Flag, X, Menu, Plus, Send } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import {
+  Search,
+  ChevronDown,
+  ChevronUp,
+  MessageSquare,
+  Award,
+  Shield,
+  TrendingUp,
+  BookOpen,
+  Users,
+  FileText,
+  AlertCircle,
+  CheckCircle,
+  Flag,
+  X,
+  Menu,
+  Plus,
+  Send,
+} from "lucide-react";
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState("dashboard");
   const [questions, setQuestions] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
   // Initialize sample data
@@ -14,7 +32,8 @@ const App = () => {
       {
         id: 1,
         title: "How to process clearance for graduating students?",
-        content: "I'm graduating this semester and confused about the clearance process. What are the exact steps and which offices should I visit first?",
+        content:
+          "I'm graduating this semester and confused about the clearance process. What are the exact steps and which offices should I visit first?",
         author: "Anonymous Iskolar",
         tags: ["clearance", "graduation", "administrative"],
         campus: "Main Campus",
@@ -22,12 +41,13 @@ const App = () => {
         votes: 23,
         comments: [],
         views: 342,
-        timestamp: "2 days ago"
+        timestamp: "2 days ago",
       },
       {
         id: 2,
         title: "Best professors for Data Structures course?",
-        content: "Planning to take Data Structures next sem. Who are the best professors in terms of teaching style and fairness in grading?",
+        content:
+          "Planning to take Data Structures next sem. Who are the best professors in terms of teaching style and fairness in grading?",
         author: "Anonymous Iskolar",
         tags: ["professors", "computer-science", "course-selection"],
         campus: "Main Campus",
@@ -35,12 +55,13 @@ const App = () => {
         votes: 45,
         comments: [],
         views: 891,
-        timestamp: "5 hours ago"
+        timestamp: "5 hours ago",
       },
       {
         id: 3,
         title: "DOST Scholarship renewal requirements 2026?",
-        content: "My DOST scholarship is up for renewal. What are the updated requirements and GWA needed to maintain it?",
+        content:
+          "My DOST scholarship is up for renewal. What are the updated requirements and GWA needed to maintain it?",
         author: "Anonymous Iskolar",
         tags: ["scholarship", "DOST", "financial-aid"],
         campus: "Main Campus",
@@ -48,12 +69,13 @@ const App = () => {
         votes: 67,
         comments: [],
         views: 1245,
-        timestamp: "1 day ago"
+        timestamp: "1 day ago",
       },
       {
         id: 4,
         title: "Late enrollment process - is it still possible?",
-        content: "I missed the regular enrollment period due to medical reasons. Can I still enroll late? What documents do I need?",
+        content:
+          "I missed the regular enrollment period due to medical reasons. Can I still enroll late? What documents do I need?",
         author: "Anonymous Iskolar",
         tags: ["enrollment", "administrative", "deadlines"],
         campus: "Main Campus",
@@ -61,33 +83,54 @@ const App = () => {
         votes: 12,
         comments: [],
         views: 234,
-        timestamp: "3 hours ago"
-      }
+        timestamp: "3 hours ago",
+      },
     ];
     setQuestions(sampleQuestions);
   }, []);
 
   const allTags = [
-    "enrollment", "clearance", "graduation", "administrative", "scholarship",
-    "DOST", "financial-aid", "professors", "course-selection", "computer-science",
-    "engineering", "business", "deadlines", "requirements", "registration"
+    "enrollment",
+    "clearance",
+    "graduation",
+    "administrative",
+    "scholarship",
+    "DOST",
+    "financial-aid",
+    "professors",
+    "course-selection",
+    "computer-science",
+    "engineering",
+    "business",
+    "deadlines",
+    "requirements",
+    "registration",
   ];
 
-  const campuses = ["All Campuses", "Main Campus", "Santa Rosa Campus", "Biñan Campus", "San Pedro Campus", "Calauan Campus"];
+  const campuses = [
+    "All Campuses",
+    "Main Campus",
+    "Santa Rosa Campus",
+    "Biñan Campus",
+    "San Pedro Campus",
+    "Calauan Campus",
+  ];
 
   // Vote handler
   const handleVote = (questionId, direction) => {
-    setQuestions(questions.map(q => {
-      if (q.id === questionId) {
-        return { ...q, votes: q.votes + (direction === 'up' ? 1 : -1) };
-      }
-      return q;
-    }));
+    setQuestions(
+      questions.map((q) => {
+        if (q.id === questionId) {
+          return { ...q, votes: q.votes + (direction === "up" ? 1 : -1) };
+        }
+        return q;
+      }),
+    );
 
     if (selectedQuestion && selectedQuestion.id === questionId) {
       setSelectedQuestion({
         ...selectedQuestion,
-        votes: selectedQuestion.votes + (direction === 'up' ? 1 : -1)
+        votes: selectedQuestion.votes + (direction === "up" ? 1 : -1),
       });
     }
   };
@@ -101,20 +144,22 @@ const App = () => {
       text: commentText,
       author: "Anonymous Iskolar",
       timestamp: "just now",
-      votes: 0
+      votes: 0,
     };
 
-    setQuestions(questions.map(q => {
-      if (q.id === questionId) {
-        return { ...q, comments: [...q.comments, newComment] };
-      }
-      return q;
-    }));
+    setQuestions(
+      questions.map((q) => {
+        if (q.id === questionId) {
+          return { ...q, comments: [...q.comments, newComment] };
+        }
+        return q;
+      }),
+    );
 
     if (selectedQuestion && selectedQuestion.id === questionId) {
       setSelectedQuestion({
         ...selectedQuestion,
-        comments: [...selectedQuestion.comments, newComment]
+        comments: [...selectedQuestion.comments, newComment],
       });
     }
   };
@@ -126,16 +171,18 @@ const App = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
             <button
-              onClick={() => setCurrentPage('dashboard')}
+              onClick={() => setCurrentPage("dashboard")}
               className="flex items-center space-x-2"
             >
               <BookOpen className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">Iskolar Overflow QNA</span>
+              <span className="text-xl font-bold text-gray-900">
+                Iskolar Overflow QNA
+              </span>
             </button>
 
             <div className="hidden md:flex space-x-6">
               <button
-                onClick={() => setCurrentPage('dashboard')}
+                onClick={() => setCurrentPage("dashboard")}
                 className="text-gray-700 hover:text-blue-600 font-medium"
               >
                 Questions
@@ -148,7 +195,7 @@ const App = () => {
 
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => setCurrentPage('ask')}
+              onClick={() => setCurrentPage("ask")}
               className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
             >
               <Plus className="w-4 h-4" />
@@ -162,11 +209,13 @@ const App = () => {
 
   // Dashboard / Question Feed
   const Dashboard = () => {
-    const filteredQuestions = questions.filter(q => {
-      const matchesSearch = q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const filteredQuestions = questions.filter((q) => {
+      const matchesSearch =
+        q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         q.content.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTags = selectedTags.length === 0 ||
-        selectedTags.some(tag => q.tags.includes(tag));
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => q.tags.includes(tag));
       return matchesSearch && matchesTags;
     });
 
@@ -174,11 +223,15 @@ const App = () => {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Banner */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg p-8 mb-8 text-white">
+          <div className="bg-linear-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg p-8 mb-8 text-white">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold mb-2">Welcome to Iskolar Overflow</h1>
-                <p className="text-blue-100">Anonymous campus Q&A - Ask anything, help everyone</p>
+                <h1 className="text-3xl font-bold mb-2">
+                  Welcome to Iskolar Overflow
+                </h1>
+                <p className="text-blue-100">
+                  Anonymous campus Q&A - Ask anything, help everyone
+                </p>
               </div>
               <Shield className="w-16 h-16 text-blue-200 hidden md:block" />
             </div>
@@ -186,27 +239,30 @@ const App = () => {
 
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Sidebar */}
-            <div className="lg:w-64 flex-shrink-0">
+            <div className="lg:w-64 shrink-0">
               <div className="bg-white rounded-lg shadow p-6 sticky top-20">
                 <h3 className="font-bold mb-4 flex items-center">
                   <FileText className="w-5 h-5 mr-2 text-blue-600" />
                   Filter by Tags
                 </h3>
                 <div className="space-y-2">
-                  {allTags.slice(0, 10).map(tag => (
+                  {allTags.slice(0, 10).map((tag) => (
                     <button
                       key={tag}
                       onClick={() => {
                         if (selectedTags.includes(tag)) {
-                          setSelectedTags(selectedTags.filter(t => t !== tag));
+                          setSelectedTags(
+                            selectedTags.filter((t) => t !== tag),
+                          );
                         } else {
                           setSelectedTags([...selectedTags, tag]);
                         }
                       }}
-                      className={`block w-full text-left px-3 py-2 rounded text-sm transition ${selectedTags.includes(tag)
-                          ? 'bg-blue-100 text-blue-700 font-medium'
-                          : 'hover:bg-gray-100 text-gray-700'
-                        }`}
+                      className={`block w-full text-left px-3 py-2 rounded text-sm transition ${
+                        selectedTags.includes(tag)
+                          ? "bg-blue-100 text-blue-700 font-medium"
+                          : "hover:bg-gray-100 text-gray-700"
+                      }`}
                     >
                       {tag}
                     </button>
@@ -231,7 +287,7 @@ const App = () => {
                     {filteredQuestions.length} Questions
                   </h2>
                   <button
-                    onClick={() => setCurrentPage('ask')}
+                    onClick={() => setCurrentPage("ask")}
                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
                   >
                     Ask Question
@@ -253,11 +309,15 @@ const App = () => {
               {filteredQuestions.length === 0 ? (
                 <div className="bg-white rounded-lg shadow p-12 text-center">
                   <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-700 mb-2">No questions found</h3>
-                  <p className="text-gray-600 mb-6">Try adjusting your search or filters</p>
+                  <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                    No questions found
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Try adjusting your search or filters
+                  </p>
                   <button
                     onClick={() => {
-                      setSearchQuery('');
+                      setSearchQuery("");
                       setSelectedTags([]);
                     }}
                     className="text-blue-600 hover:text-blue-700 font-medium"
@@ -267,7 +327,7 @@ const App = () => {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {filteredQuestions.map(question => (
+                  {filteredQuestions.map((question) => (
                     <QuestionCard key={question.id} question={question} />
                   ))}
                 </div>
@@ -284,22 +344,28 @@ const App = () => {
     <div
       onClick={() => {
         setSelectedQuestion(question);
-        setCurrentPage('question-detail');
+        setCurrentPage("question-detail");
       }}
       className="bg-white rounded-lg shadow hover:shadow-md transition p-6 cursor-pointer"
     >
       <div className="flex gap-6">
         <div className="flex flex-col items-center space-y-2 text-sm text-gray-600">
           <div className="flex flex-col items-center">
-            <span className="font-bold text-lg text-gray-900">{question.votes}</span>
+            <span className="font-bold text-lg text-gray-900">
+              {question.votes}
+            </span>
             <span>votes</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="font-bold text-lg text-gray-900">{question.comments.length}</span>
+            <span className="font-bold text-lg text-gray-900">
+              {question.comments.length}
+            </span>
             <span>comments</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="font-bold text-lg text-gray-900">{question.views}</span>
+            <span className="font-bold text-lg text-gray-900">
+              {question.views}
+            </span>
             <span>views</span>
           </div>
         </div>
@@ -311,8 +377,11 @@ const App = () => {
           <p className="text-gray-700 mb-4 line-clamp-2">{question.content}</p>
 
           <div className="flex flex-wrap gap-2 mb-3">
-            {question.tags.map(tag => (
-              <span key={tag} className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">
+            {question.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
+              >
                 {tag}
               </span>
             ))}
@@ -337,14 +406,14 @@ const App = () => {
 
   // Question Detail Page
   const QuestionDetail = () => {
-    const [newComment, setNewComment] = useState('');
+    const [newComment, setNewComment] = useState("");
 
     if (!selectedQuestion) return null;
 
     const handleSubmitComment = () => {
       if (newComment.trim()) {
         handleAddComment(selectedQuestion.id, newComment);
-        setNewComment('');
+        setNewComment("");
       }
     };
 
@@ -352,7 +421,7 @@ const App = () => {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <button
-            onClick={() => setCurrentPage('dashboard')}
+            onClick={() => setCurrentPage("dashboard")}
             className="text-blue-600 hover:text-blue-700 mb-6 flex items-center font-medium"
           >
             ← Back to Questions
@@ -365,17 +434,19 @@ const App = () => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleVote(selectedQuestion.id, 'up');
+                    handleVote(selectedQuestion.id, "up");
                   }}
                   className="p-2 hover:bg-blue-50 rounded transition"
                 >
                   <ChevronUp className="w-6 h-6 text-gray-600 hover:text-blue-600" />
                 </button>
-                <span className="text-2xl font-bold text-gray-900">{selectedQuestion.votes}</span>
+                <span className="text-2xl font-bold text-gray-900">
+                  {selectedQuestion.votes}
+                </span>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleVote(selectedQuestion.id, 'down');
+                    handleVote(selectedQuestion.id, "down");
                   }}
                   className="p-2 hover:bg-red-50 rounded transition"
                 >
@@ -392,8 +463,11 @@ const App = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {selectedQuestion.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">
+                  {selectedQuestion.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -407,7 +481,9 @@ const App = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <span>Asked {selectedQuestion.timestamp} by</span>
-                    <span className="font-medium">{selectedQuestion.author}</span>
+                    <span className="font-medium">
+                      {selectedQuestion.author}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -423,8 +499,11 @@ const App = () => {
 
             {selectedQuestion.comments.length > 0 && (
               <div className="space-y-4 mb-8">
-                {selectedQuestion.comments.map(comment => (
-                  <div key={comment.id} className="border-l-4 border-blue-200 pl-4 py-2">
+                {selectedQuestion.comments.map((comment) => (
+                  <div
+                    key={comment.id}
+                    className="border-l-4 border-blue-200 pl-4 py-2"
+                  >
                     <p className="text-gray-700 mb-2">{comment.text}</p>
                     <div className="flex items-center text-sm text-gray-500">
                       <span className="font-medium">{comment.author}</span>
@@ -462,11 +541,11 @@ const App = () => {
 
   // Ask Question Page
   const AskQuestionPage = () => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
     const [tags, setTags] = useState([]);
-    const [campus, setCampus] = useState('Main Campus');
-    const [department, setDepartment] = useState('General');
+    const [campus, setCampus] = useState("Main Campus");
+    const [department, setDepartment] = useState("General");
 
     const handleSubmit = () => {
       if (title.trim() && content.trim() && tags.length > 0) {
@@ -481,11 +560,11 @@ const App = () => {
           votes: 0,
           comments: [],
           views: 0,
-          timestamp: "just now"
+          timestamp: "just now",
         };
         setQuestions([newQuestion, ...questions]);
         setSelectedQuestion(newQuestion);
-        setCurrentPage('question-detail');
+        setCurrentPage("question-detail");
       }
     };
 
@@ -493,7 +572,9 @@ const App = () => {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold mb-2">Ask a Question</h1>
-          <p className="text-gray-600 mb-8">Share your question with the community anonymously</p>
+          <p className="text-gray-600 mb-8">
+            Share your question with the community anonymously
+          </p>
 
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
             <h3 className="font-bold text-blue-900 mb-2 flex items-center">
@@ -545,8 +626,10 @@ const App = () => {
                   onChange={(e) => setCampus(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  {campuses.slice(1).map(c => (
-                    <option key={c} value={c}>{c}</option>
+                  {campuses.slice(1).map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -577,21 +660,22 @@ const App = () => {
                 Tags (select up to 5) *
               </label>
               <div className="flex flex-wrap gap-2">
-                {allTags.map(tag => (
+                {allTags.map((tag) => (
                   <button
                     key={tag}
                     type="button"
                     onClick={() => {
                       if (tags.includes(tag)) {
-                        setTags(tags.filter(t => t !== tag));
+                        setTags(tags.filter((t) => t !== tag));
                       } else if (tags.length < 5) {
                         setTags([...tags, tag]);
                       }
                     }}
-                    className={`px-3 py-1 rounded-full text-sm transition ${tags.includes(tag)
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                      } ${tags.length >= 5 && !tags.includes(tag) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`px-3 py-1 rounded-full text-sm transition ${
+                      tags.includes(tag)
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    } ${tags.length >= 5 && !tags.includes(tag) ? "opacity-50 cursor-not-allowed" : ""}`}
                     disabled={tags.length >= 5 && !tags.includes(tag)}
                   >
                     {tag}
@@ -606,15 +690,17 @@ const App = () => {
             </div>
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start space-x-3">
-              <Shield className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+              <Shield className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
               <div className="text-sm text-green-900">
-                <strong>Anonymous Posting:</strong> Your question will be posted as "Anonymous Iskolar". Your identity remains completely protected.
+                <strong>Anonymous Posting:</strong> Your question will be posted
+                as "Anonymous Iskolar". Your identity remains completely
+                protected.
               </div>
             </div>
 
             <div className="flex items-center justify-between pt-6 border-t">
               <button
-                onClick={() => setCurrentPage('dashboard')}
+                onClick={() => setCurrentPage("dashboard")}
                 className="text-gray-600 hover:text-gray-800 font-medium"
               >
                 Cancel
@@ -638,9 +724,9 @@ const App = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
 
-      {currentPage === 'dashboard' && <Dashboard />}
-      {currentPage === 'question-detail' && <QuestionDetail />}
-      {currentPage === 'ask' && <AskQuestionPage />}
+      {currentPage === "dashboard" && <Dashboard />}
+      {currentPage === "question-detail" && <QuestionDetail />}
+      {currentPage === "ask" && <AskQuestionPage />}
     </div>
   );
 };
