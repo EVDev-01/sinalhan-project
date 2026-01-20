@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+/* Add emoji font support */
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Roboto",
+        "Oxygen",
+        "Ubuntu",
+        "Cantarell",
+        "Fira Sans",
+        "Droid Sans",
+        "Helvetica Neue",
+        /* Emoji fonts */ "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        "Noto Color Emoji",
+        sans-serif;
+}
+
+/* Ensure textareas also support emojis */
+textarea,
+input {
+    font-family: inherit;
+}

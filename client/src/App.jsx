@@ -12,13 +12,17 @@ const App = () => {
     questions,
     selectedQuestion,
     setSelectedQuestion,
+    loading,
+    error,
     handleVote,
     handleAddComment,
     addQuestion,
+    refreshQuestion,
   } = useQuestions();
 
   const handleQuestionClick = (question) => {
     setSelectedQuestion(question);
+    refreshQuestion(question.id); // Refresh to get latest data & increment views
     setCurrentPage("question-detail");
   };
 
@@ -26,15 +30,49 @@ const App = () => {
     setCurrentPage("ask");
   };
 
-  const handleSubmitQuestion = (newQuestion) => {
-    addQuestion(newQuestion);
-    setSelectedQuestion(newQuestion);
-    setCurrentPage("question-detail");
+  const handleSubmitQuestion = async (newQuestion) => {
+    try {
+      const createdQuestion = await addQuestion(newQuestion);
+      setSelectedQuestion(createdQuestion);
+      setCurrentPage("question-detail");
+    } catch (err) {
+      console.error("Failed to create question:", err);
+    }
   };
 
   const handleBackToDashboard = () => {
     setCurrentPage("dashboard");
   };
+
+  // Show loading state
+  if (loading && currentPage === "dashboard") {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading questions...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error && questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-600 text-xl mb-4">⚠️ Error Loading Data</div>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

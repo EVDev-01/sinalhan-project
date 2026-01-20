@@ -1,14 +1,26 @@
 import { useState } from "react";
-import { ChevronUp, ChevronDown, MessageSquare, Send } from "lucide-react";
+import {
+  ChevronUp,
+  ChevronDown,
+  MessageSquare,
+  Send,
+  Smile,
+} from "lucide-react";
+import EmojiPicker from "emoji-picker-react";
 
 const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
   const [newComment, setNewComment] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const handleSubmitComment = () => {
     if (newComment.trim()) {
       onAddComment(question.id, newComment);
       setNewComment("");
     }
+  };
+
+  const onEmojiClick = (emojiObject) => {
+    setNewComment((prev) => prev + emojiObject.emoji);
   };
 
   return (
@@ -104,20 +116,40 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
           {/* Add Comment Section */}
           <div className="border-t pt-6">
             <h3 className="font-semibold mb-3">Add a Comment</h3>
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Share your thoughts, ask for clarification, or provide additional context..."
-              className="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
-            />
-            <button
-              onClick={handleSubmitComment}
-              disabled={!newComment.trim()}
-              className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              <Send className="w-4 h-4" />
-              <span>Post Comment</span>
-            </button>
+            <div className="relative">
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Share your thoughts, ask for clarification, or provide additional context... 😊"
+                className="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+              />
+
+              {/* Emoji Picker */}
+              {showEmojiPicker && (
+                <div className="absolute bottom-20 right-0 z-10">
+                  <EmojiPicker onEmojiClick={onEmojiClick} />
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition"
+              >
+                <Smile className="w-5 h-5" />
+                <span className="text-sm">Add Emoji</span>
+              </button>
+
+              <button
+                onClick={handleSubmitComment}
+                disabled={!newComment.trim()}
+                className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                <Send className="w-4 h-4" />
+                <span>Post Comment</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,69 +1,110 @@
-import { useState } from "react";
-import { sampleQuestions } from "../data/mockData";
+import { useState, useEffect } from "react";
+import * as api from "../utils/api";
 
 export const useQuestions = () => {
-  const [questions, setQuestions] = useState(sampleQuestions);
+  const [questions, setQuestions] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch questions on mount
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
+
+  const fetchQuestions = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await api.getQuestions();
+      setQuestions(data);
+    } catch (err) {
+      setError(err.message);
+      console.error("Error fetching questions:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Vote handler
-  const handleVote = (questionId, direction) => {
-    setQuestions(
-      questions.map((q) => {
-        if (q.id === questionId) {
-          return { ...q, votes: q.votes + (direction === "up" ? 1 : -1) };
-        }
-        return q;
-      }),
-    );
+  const handleVote = async (questionId, direction) => {
+    try {
+      const updatedQuestion = await api.voteQuestion(questionId, direction);
 
-    if (selectedQuestion && selectedQuestion.id === questionId) {
-      setSelectedQuestion({
-        ...selectedQuestion,
-        votes: selectedQuestion.votes + (direction === "up" ? 1 : -1),
-      });
+      // Update questions list
+      setQuestions(
+        questions.map((q) => (q.id === questionId ? updatedQuestion : q)),
+      );
+
+      // Update selected question if viewing
+      if (selectedQuestion && selectedQuestion.id === questionId) {
+        setSelectedQuestion(updatedQuestion);
+      }
+    } catch (err) {
+      console.error("Error voting:", err);
+      setError(err.message);
     }
   };
 
   // Add comment handler
-  const handleAddComment = (questionId, commentText) => {
+  const handleAddComment = async (questionId, commentText) => {
     if (!commentText.trim()) return;
 
-    const newComment = {
-      id: Date.now(),
-      text: commentText,
-      author: "Anonymous Iskolar",
-      timestamp: "just now",
-      votes: 0,
-    };
-
-    setQuestions(
-      questions.map((q) => {
-        if (q.id === questionId) {
-          return { ...q, comments: [...q.comments, newComment] };
-        }
-        return q;
-      }),
-    );
-
-    if (selectedQuestion && selectedQuestion.id === questionId) {
-      setSelectedQuestion({
-        ...selectedQuestion,
-        comments: [...selectedQuestion.comments, newComment],
+    try {
+      const updatedQuestion = await api.addComment(questionId, {
+        text: commentText,
+        author: "Anonymous Iskolar",
       });
+
+      // Update questions list
+      setQuestions(
+        questions.map((q) => (q.id === questionId ? updatedQuestion : q)),
+      );
+
+      // Update selected question
+      if (selectedQuestion && selectedQuestion.id === questionId) {
+        setSelectedQuestion(updatedQuestion);
+      }
+    } catch (err) {
+      console.error("Error adding comment:", err);
+      setError(err.message);
     }
   };
 
   // Add new question
-  const addQuestion = (newQuestion) => {
-    setQuestions([newQuestion, ...questions]);
+  const addQuestion = async (newQuestion) => {
+    try {
+      const createdQuestion = await api.postQuestion(newQuestion);
+      setQuestions([createdQuestion, ...questions]);
+      return createdQuestion;
+    } catch (err) {
+      console.error("Error creating question:", err);
+      setError(err.message);
+      throw err;
+    }
+  };
+
+  // Refresh single question (for view count)
+  const refreshQuestion = async (questionId) => {
+    try {
+      const question = await api.getQuestion(questionId);
+      setSelectedQuestion(question);
+    } catch (err) {
+      console.error("Error refreshing question:", err);
+      setError(err.message);
+    }
   };
 
   return {
     questions,
     selectedQuestion,
     setSelectedQuestion,
+    loading,
+    error,
     handleVote,
     handleAddComment,
     addQuestion,
+    refreshQuestion,
+    fetchQuestions,
   };
 };

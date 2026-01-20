@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AlertCircle, Shield } from "lucide-react";
-import { allTags, campuses } from "../../data/mockData";
+import * as api from "../../utils/api";
 
 const AskQuestionForm = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState("");
@@ -9,20 +9,95 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
   const [campus, setCampus] = useState("Main Campus");
   const [department, setDepartment] = useState("General");
 
+  // Fetch options from API
+  const [allTags, setAllTags] = useState([]);
+  const [campuses, setCampuses] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const [tagsData, campusesData, departmentsData] = await Promise.all([
+          api.getTags(),
+          api.getCampuses(),
+          api.getDepartments(),
+        ]);
+
+        setAllTags(
+          tagsData.length > 0
+            ? tagsData
+            : [
+                "enrollment",
+                "clearance",
+                "graduation",
+                "administrative",
+                "scholarship",
+                "DOST",
+                "financial-aid",
+                "professors",
+                "course-selection",
+                "computer-science",
+                "engineering",
+                "business",
+              ],
+        );
+
+        setCampuses(
+          campusesData.length > 0
+            ? campusesData
+            : [
+                "Main Campus",
+                "Santa Rosa Campus",
+                "Biñan Campus",
+                "San Pedro Campus",
+                "Calauan Campus",
+              ],
+        );
+
+        setDepartments(
+          departmentsData.length > 0
+            ? departmentsData
+            : [
+                "General",
+                "Information Technology",
+                "Engineering",
+                "Business",
+                "Accounting",
+                "Entrepreneurship",
+                "Education",
+                "Psychology",
+              ],
+        );
+      } catch (error) {
+        console.error("Error fetching options:", error);
+        // Use fallback values
+        setAllTags([
+          "enrollment",
+          "clearance",
+          "graduation",
+          "administrative",
+          "scholarship",
+        ]);
+        setCampuses(["Main Campus"]);
+        setDepartments(["General"]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOptions();
+  }, []);
+
   const handleSubmit = () => {
     if (title.trim() && content.trim() && tags.length > 0) {
       const newQuestion = {
-        id: Date.now(),
         title,
         content,
         author: "Anonymous Iskolar",
         tags,
         campus,
         department,
-        votes: 0,
-        comments: [],
-        views: 0,
-        timestamp: "just now",
       };
       onSubmit(newQuestion);
     }
@@ -35,6 +110,19 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
       setTags([...tags, tag]);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading form...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -94,7 +182,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
                 onChange={(e) => setCampus(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                {campuses.slice(1).map((c) => (
+                {campuses.map((c) => (
                   <option key={c} value={c}>
                     {c}
                   </option>
@@ -111,14 +199,11 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
                 onChange={(e) => setDepartment(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option>General</option>
-                <option>Information Technology</option>
-                <option>Engineering</option>
-                <option>Business</option>
-                <option>Accounting</option>
-                <option>Entrepreneurship</option>
-                <option>Education</option>
-                <option>Psychology</option>
+                {departments.map((d) => (
+                  <option key={d} value={d}>
+                    {d}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
