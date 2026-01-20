@@ -1,4 +1,4 @@
-import { BookOpen, Plus } from "lucide-react";
+import { HatGlasses, Plus } from "lucide-react";
 
 const Navigation = ({ currentPage, setCurrentPage }) => {
   return (
@@ -10,7 +10,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
               onClick={() => setCurrentPage("dashboard")}
               className="flex items-center space-x-2"
             >
-              <BookOpen className="w-8 h-8 text-blue-600" />
+              <HatGlasses className="w-8 h-8 text-red-700" />
               <span className="text-xl font-bold text-gray-900">
                 Iskolar Overflow Q&A
               </span>
@@ -21,14 +21,11 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
                 onClick={() => setCurrentPage("dashboard")}
                 className={`font-medium transition ${
                   currentPage === "dashboard"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
+                    ? "text-gray-700 border-b-2 border-gray-800"
+                    : "text-gray-500 hover:text-red-700"
                 }`}
               >
                 Questions
-              </button>
-              <button className="text-gray-700 hover:text-blue-600 font-medium">
-                Tags
               </button>
             </div>
           </div>
@@ -36,7 +33,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setCurrentPage("ask")}
-              className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+              className="flex items-center space-x-2 bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-800/75 active:bg-red-800/25 transition shadow-md shadow-gray-400 active:shadow-none"
             >
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">Ask Question</span>

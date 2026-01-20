@@ -28,7 +28,7 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
           onClick={onBack}
-          className="text-blue-600 hover:text-blue-700 mb-6 flex items-center font-medium"
+          className="text-red-600 hover:text-red-700 mb-6 flex items-center font-medium"
         >
           ← Back to Questions
         </button>
@@ -39,9 +39,9 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
             <div className="flex flex-col items-center space-y-4">
               <button
                 onClick={() => onVote(question.id, "up")}
-                className="p-2 hover:bg-blue-50 rounded transition"
+                className="p-2 hover:bg-red-50 rounded transition"
               >
-                <ChevronUp className="w-6 h-6 text-gray-600 hover:text-blue-600" />
+                <ChevronUp className="w-6 h-6 text-gray-600 hover:text-red-600" />
               </button>
               <span className="text-2xl font-bold text-gray-900">
                 {question.votes}
@@ -66,7 +66,7 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
                 {question.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
+                    className="px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full"
                   >
                     {tag}
                   </span>
@@ -91,7 +91,7 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
         {/* Comments Section */}
         <div className="bg-white rounded-lg shadow p-8 mb-6">
           <h2 className="text-2xl font-bold mb-6 flex items-center">
-            <MessageSquare className="w-6 h-6 mr-2 text-blue-600" />
+            <MessageSquare className="w-6 h-6 mr-2 text-red-600" />
             {question.comments.length} Comments
           </h2>
 
@@ -100,7 +100,7 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
               {question.comments.map((comment) => (
                 <div
                   key={comment.id}
-                  className="border-l-4 border-blue-200 pl-4 py-2"
+                  className="border-l-4 border-red-200 pl-4 py-2"
                 >
                   <p className="text-gray-700 mb-2">{comment.text}</p>
                   <div className="flex items-center text-sm text-gray-500">
@@ -121,7 +121,7 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 placeholder="Share your thoughts, ask for clarification, or provide additional context... 😊"
-                className="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+                className="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent mb-4"
               />
 
               {/* Emoji Picker */}
@@ -135,7 +135,7 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
             <div className="flex items-center justify-between">
               <button
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition"
+                className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition"
               >
                 <Smile className="w-5 h-5" />
                 <span className="text-sm">Add Emoji</span>
@@ -144,7 +144,7 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
               <button
                 onClick={handleSubmitComment}
                 disabled={!newComment.trim()}
-                className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="flex items-center space-x-2 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
                 <span>Post Comment</span>

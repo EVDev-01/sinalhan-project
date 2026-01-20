@@ -8,20 +8,20 @@ const Dashboard = ({ questions, onQuestionClick, onAskQuestion }) => {
   const [selectedTags, setSelectedTags] = useState([]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Banner */}
-        <div className="bg-linear-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg p-8 mb-8 text-white">
+        <div className="bg-red-800 rounded-xl shadow-lg p-8 mb-8 text-white">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">
                 Welcome to Iskolar Overflow
               </h1>
-              <p className="text-blue-100">
+              <p className="text-red-100">
                 Anonymous campus Q&A - Ask anything, help everyone
               </p>
             </div>
-            <Shield className="w-16 h-16 text-blue-200 hidden md:block" />
+            <img src="/logo.png" width="100px"></img>
           </div>
         </div>
 

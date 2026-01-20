@@ -116,7 +116,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
             <p className="text-gray-600">Loading form...</p>
           </div>
         </div>
@@ -132,12 +132,12 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
           Share your question with the community anonymously
         </p>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-          <h3 className="font-bold text-blue-900 mb-2 flex items-center">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
+          <h3 className="font-bold text-red-900 mb-2 flex items-center">
             <AlertCircle className="w-5 h-5 mr-2" />
             Tips for asking a great question
           </h3>
-          <ul className="text-sm text-blue-800 space-y-1">
+          <ul className="text-sm text-red-800 space-y-1">
             <li>• Be specific and clear in your title</li>
             <li>• Provide all relevant context and details</li>
             <li>• Use appropriate tags to help others find your question</li>
@@ -156,7 +156,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g., How to process scholarship renewal for DOST scholars?"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black-500 focus:border-transparent"
             />
           </div>
 
@@ -168,7 +168,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Provide more context, what you've tried, and what specific help you need..."
-              className="w-full h-48 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full h-48 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black-500 focus:border-transparent"
             />
           </div>
 
@@ -180,7 +180,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
               <select
                 value={campus}
                 onChange={(e) => setCampus(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               >
                 {campuses.map((c) => (
                   <option key={c} value={c}>
@@ -197,7 +197,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               >
                 {departments.map((d) => (
                   <option key={d} value={d}>
@@ -220,7 +220,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
                   onClick={() => toggleTag(tag)}
                   className={`px-3 py-1 rounded-full text-sm transition ${
                     tags.includes(tag)
-                      ? "bg-blue-600 text-white"
+                      ? "bg-red-800 text-white"
                       : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                   } ${tags.length >= 5 && !tags.includes(tag) ? "opacity-50 cursor-not-allowed" : ""}`}
                   disabled={tags.length >= 5 && !tags.includes(tag)}
@@ -255,7 +255,7 @@ const AskQuestionForm = ({ onSubmit, onCancel }) => {
             <button
               onClick={handleSubmit}
               disabled={!title.trim() || !content.trim() || tags.length === 0}
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="bg-red-800 text-white px-8 py-3 rounded-lg font-medium transition-all duration-150 shadow-md active:scale-[1.1] active:shadow-none disabled:bg-gray-400 disabled:translate-y-0 disabled:[box-shadow:none] disabled:cursor-not-allowed"
             >
               Post Question Anonymously
             </button>

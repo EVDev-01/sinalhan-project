@@ -29,7 +29,7 @@ const QuestionList = ({
           </h2>
           <button
             onClick={onAskQuestion}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
+            className="bg-red-800 text-white px-6 py-2 rounded-lg hover:bg-red-800/75 active:bg-red-800/25 transition duration-150 font-medium shadow-md shadow-gray-400 active:shadow-none"
           >
             Ask Question
           </button>
@@ -42,7 +42,7 @@ const QuestionList = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search questions..."
-            className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -61,7 +61,7 @@ const QuestionList = ({
               setSearchQuery("");
               setSelectedTags([]);
             }}
-            className="text-blue-600 hover:text-blue-700 font-medium"
+            className="text-red-600 hover:text-red-700 font-medium"
           >
             Clear all filters
           </button>
