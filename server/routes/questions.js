@@ -13,6 +13,7 @@ const {
   voteQuestion,
   addComment,
   deleteQuestion,
+  deleteComment,
 } = require("../controllers/QuestionControllers");
 
 // Search must be defined before the /:id parameter route
@@ -44,5 +45,8 @@ router.put("/:id/vote", voteQuestion);
 
 // Add comment for a specific question
 router.post("/:id/comments", addComment);
+
+// Delete a specific comment
+router.delete("/:id/comments/:commentId", deleteComment);
 
 module.exports = router;

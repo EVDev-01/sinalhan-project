@@ -36,7 +36,7 @@ const QuestionCard = ({ question, onClick }) => {
             {question.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-yellow-300 text-zinc-950 text-sm rounded-full"
+                className="px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full"
               >
                 {tag}
               </span>

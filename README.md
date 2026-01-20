@@ -8,14 +8,15 @@ To create a safe and inclusive space for students to share their experiences and
 
 ## Features
 
-Core
+Core (Fully Implemented)
 - Posting questions ✅
 - Answering questions through comments ✅
 - Voting on answers ✅
 
-Extra (Not implemented)
+Extra (Not Implemented)
 - Flagging inappropriate content
 - Reporting abusive behavior
+- Dark Mode and possibly other themes
 
 Future (In the future if we have time 😊)
 - Admin and Moderator roles

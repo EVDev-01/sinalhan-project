@@ -283,7 +283,34 @@ exports.deleteQuestion = (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: {},
+      data: deleted,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Server Error",
+      message: error.message,
+    });
+  }
+};
+
+// @desc    Delete comment
+// @route   DELETE /api/questions/:id/comments/:commentId
+exports.deleteComment = (req, res) => {
+  try {
+    const { id, commentId } = req.params;
+    const question = Question.deleteComment(id, commentId);
+
+    if (!question) {
+      return res.status(404).json({
+        success: false,
+        error: "Question or Comment not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: question,
     });
   } catch (error) {
     res.status(500).json({

@@ -16,8 +16,11 @@ const App = () => {
     error,
     handleVote,
     handleAddComment,
+    handleDeleteComment,
+    handleDeleteQuestion,
     addQuestion,
     refreshQuestion,
+    fetchQuestions,
   } = useQuestions();
 
   const handleQuestionClick = (question) => {
@@ -42,6 +45,7 @@ const App = () => {
 
   const handleBackToDashboard = () => {
     setCurrentPage("dashboard");
+    fetchQuestions();
   };
 
   // Show loading state
@@ -91,6 +95,8 @@ const App = () => {
           selectedQuestion={selectedQuestion}
           onVote={handleVote}
           onAddComment={handleAddComment}
+          onDeleteComment={handleDeleteComment}
+          onDeleteQuestion={handleDeleteQuestion}
           onBack={handleBackToDashboard}
         />
       )}
