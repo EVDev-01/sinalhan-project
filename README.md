@@ -9,22 +9,39 @@ To create a safe and inclusive space for students to share their experiences and
 ## Features
 
 Core
-- Posting questions
-- Answering questions through comments
-- Voting on answers
+- Posting questions ✅
+- Answering questions through comments ✅
+- Voting on answers ✅
 
-Extra
+Extra (Not implemented)
 - Flagging inappropriate content
 - Reporting abusive behavior
 
-Future
+Future (In the future if we have time 😊)
 - Admin and Moderator roles
 
-## Technology
+## Technology Stack
 
 Client
-- HTML + CSS + JS
-- ReactJS + Vite
+- HTML + CSS + JS (React + Vite)
 
 Server
-- Express + Cors
+- NodeJS - The runtime for running JavaScript on desktop.
+- Express - A minimal web framework for http utilities and middleware.
+- CORS - Secure feature to manage the server resources from different origin.
+- SQLite - The embedded database used for storing questions and answer.
+
+## Server Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | Get all questions |
+| GET | `/search` | Search questions |
+| GET | `/tags` | Get list of tags |
+| GET | `/campuses` | Get list of campuses |
+| GET | `/departments` | Get list of departments |
+| GET | `/:id` | Get a specific question by ID |
+| POST | `/` | Create a new question |
+| POST | `/:id/comments` | Add a comment to a specific question |
+| PUT | `/:id/vote` | Vote on a specific question |
+| DELETE | `/:id` | Delete a specific question |

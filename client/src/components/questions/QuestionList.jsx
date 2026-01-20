@@ -27,12 +27,6 @@ const QuestionList = ({
           <h2 className="text-2xl font-bold text-gray-900">
             {filteredQuestions.length} Questions
           </h2>
-          <button
-            onClick={onAskQuestion}
-            className="bg-red-800 text-white px-6 py-2 rounded-lg hover:bg-red-800/75 active:bg-red-800/25 transition duration-150 font-medium shadow-md shadow-gray-400 active:shadow-none"
-          >
-            Ask Question
-          </button>
         </div>
 
         <div className="relative">

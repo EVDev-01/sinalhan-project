@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Trash,
   ChevronUp,
   ChevronDown,
   MessageSquare,
@@ -84,6 +85,12 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
                   <span className="font-medium">{question.author}</span>
                 </div>
               </div>
+            </div>
+
+            <div>
+              <button>
+                <Trash className="w-6 h-6 text-gray-400 hover:text-red-600" />
+              </button>
             </div>
           </div>
         </div>
