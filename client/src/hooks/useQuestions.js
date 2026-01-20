@@ -71,6 +71,59 @@ export const useQuestions = () => {
     }
   };
 
+  // Add delete comment handler
+  const handleDeleteComment = async (questionId, commentId) => {
+    try {
+      const cleanQuestionId = String(questionId).trim();
+      const cleanCommentId = String(commentId).trim();
+
+      const updatedQuestion = await api.deleteComment(
+        cleanQuestionId,
+        cleanCommentId,
+      );
+
+      // Update questions list
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((q) => (q.id === questionId ? updatedQuestion : q)),
+      );
+
+      // Update selected question
+      if (selectedQuestion && selectedQuestion.id === questionId) {
+        setSelectedQuestion(updatedQuestion);
+      }
+
+      return true;
+    } catch (err) {
+      console.error("Error deleting comment:", err);
+      setError(err.message);
+      return false;
+    }
+  };
+
+  // Add delete question handler
+  const handleDeleteQuestion = async (questionId) => {
+    try {
+      const cleanId = String(questionId).trim();
+      await api.deleteQuestion(cleanId);
+
+      // Remove from questions list using functional update
+      setQuestions((prevQuestions) =>
+        prevQuestions.filter((q) => q.id !== cleanId),
+      );
+
+      // Clear selected question if it was deleted
+      if (selectedQuestion && selectedQuestion.id === cleanId) {
+        setSelectedQuestion(null);
+      }
+
+      return true;
+    } catch (err) {
+      console.error("Error deleting question:", err);
+      setError(err.message);
+      return false;
+    }
+  };
+
   // Add new question
   const addQuestion = async (newQuestion) => {
     try {
@@ -103,6 +156,8 @@ export const useQuestions = () => {
     error,
     handleVote,
     handleAddComment,
+    handleDeleteComment,
+    handleDeleteQuestion,
     addQuestion,
     refreshQuestion,
     fetchQuestions,

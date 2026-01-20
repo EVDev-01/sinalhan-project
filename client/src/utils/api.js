@@ -74,9 +74,9 @@ export const getQuestions = async () => {
   }
 };
 
-export const getQuestion = async (id) => {
+export const getQuestion = async (questionId) => {
   try {
-    const response = await fetch(`${API_URL}/questions/${id}`);
+    const response = await fetch(`${API_URL}/questions/${questionId}`);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -108,9 +108,9 @@ export const postQuestion = async (questionData) => {
   }
 };
 
-export const deleteQuestion = async (id) => {
+export const deleteQuestion = async (questionId) => {
   try {
-    const response = await fetch(`${API_URL}/questions/${id}`, {
+    const response = await fetch(`${API_URL}/questions/${questionId}`, {
       method: "DELETE",
     });
     if (!response.ok) {
@@ -123,9 +123,9 @@ export const deleteQuestion = async (id) => {
   }
 };
 
-export const voteQuestion = async (id, direction) => {
+export const voteQuestion = async (questionId, direction) => {
   try {
-    const response = await fetch(`${API_URL}/questions/${id}/vote`, {
+    const response = await fetch(`${API_URL}/questions/${questionId}/vote`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -143,15 +143,18 @@ export const voteQuestion = async (id, direction) => {
   }
 };
 
-export const addComment = async (id, commentData) => {
+export const addComment = async (questionId, commentData) => {
   try {
-    const response = await fetch(`${API_URL}/questions/${id}/comments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${API_URL}/questions/${questionId}/comments`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(commentData),
       },
-      body: JSON.stringify(commentData),
-    });
+    );
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -159,6 +162,41 @@ export const addComment = async (id, commentData) => {
     return result.data;
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+};
+
+/**
+ * Deletes a specific comment from a question.
+ * @param {string|number} questionId - The ID of the parent question.
+ * @param {string|number} commentId - The ID of the comment to delete.
+ */
+export const deleteComment = async (questionId, commentId) => {
+  // Debugging: Check if the IDs are coming in correctly
+  console.log(`Deleting comment: ${commentId} from question: ${questionId}`);
+
+  if (!questionId || !commentId) {
+    throw new Error("Missing questionId or commentId");
+  }
+
+  try {
+    const response = await fetch(
+      `${API_URL}/questions/${questionId}/comments/${commentId}`,
+      {
+        method: "DELETE",
+      },
+    );
+
+    if (!response.ok) {
+      // Provide more detail in the error if the server fails
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || response.statusText);
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.error("API Error in deleteComment:", error);
     throw error;
   }
 };

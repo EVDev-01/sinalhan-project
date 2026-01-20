@@ -167,6 +167,45 @@ class Question {
     return result.changes > 0;
   }
 
+  // Delete comment
+  static deleteComment(questionId, commentId) {
+    // Check if question exists
+    const question = db
+      .prepare(
+        `
+        SELECT * FROM questions WHERE id = ?
+      `,
+      )
+      .get(questionId);
+
+    if (!question) return null;
+
+    // Delete the comment
+    const result = db
+      .prepare(
+        `
+        DELETE FROM comments
+        WHERE id = ? AND question_id = ?
+      `,
+      )
+      .run(commentId, questionId);
+
+    if (result.changes === 0) {
+      return null; // Comment not found
+    }
+
+    // Update question updated_at
+    db.prepare(
+      `
+        UPDATE questions
+        SET updated_at = (datetime('now', 'localtime'))
+        WHERE id = ?
+      `,
+    ).run(questionId);
+
+    return this.getById(questionId);
+  }
+
   // Search questions
   static search(query, tags) {
     let sql = "SELECT * FROM questions WHERE 1=1";

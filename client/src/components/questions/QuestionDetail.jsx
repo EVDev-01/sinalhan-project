@@ -1,22 +1,59 @@
 import { useState } from "react";
 import {
-  Trash,
   ChevronUp,
   ChevronDown,
   MessageSquare,
   Send,
   Smile,
+  Trash2,
 } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
 
-const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
+const QuestionDetail = ({
+  question,
+  onVote,
+  onAddComment,
+  onDeleteComment,
+  onDeleteQuestion,
+  onBack,
+}) => {
   const [newComment, setNewComment] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [deletingComment, setDeletingComment] = useState(null);
+  const [deletingQuestion, setDeletingQuestion] = useState(false);
 
   const handleSubmitComment = () => {
     if (newComment.trim()) {
       onAddComment(question.id, newComment);
       setNewComment("");
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    if (window.confirm("Are you sure you want to delete this comment?")) {
+      setDeletingComment(commentId);
+      const success = await onDeleteComment(question.id, commentId);
+
+      if (success) {
+        console.log("Comment deleted, staying on-page for refresh");
+      }
+
+      setDeletingComment(null);
+    }
+  };
+
+  const handleDeleteQuestion = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this question? This action cannot be undone.",
+      )
+    ) {
+      setDeletingQuestion(true);
+      const success = await onDeleteQuestion(question.id);
+      if (success) {
+        onBack(); // Go back to dashboard after deletion
+      }
+      setDeletingQuestion(false);
     }
   };
 
@@ -88,8 +125,17 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
             </div>
 
             <div>
-              <button>
-                <Trash className="w-6 h-6 text-gray-400 hover:text-red-600" />
+              <button
+                onClick={handleDeleteQuestion}
+                disabled={deletingQuestion}
+                className="ml-4 p-2 text-red-600 hover:bg-red-50 rounded transition disabled:opacity-50"
+                title="Delete question"
+              >
+                {deletingQuestion ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 text-gray-400 border-red-600"></div>
+                ) : (
+                  <Trash2 className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
@@ -107,14 +153,30 @@ const QuestionDetail = ({ question, onVote, onAddComment, onBack }) => {
               {question.comments.map((comment) => (
                 <div
                   key={comment.id}
-                  className="border-l-4 border-red-200 pl-4 py-2"
+                  className="border-l-4 border-red-200 pl-4 py-2 flex items-start justify-between group"
                 >
-                  <p className="text-gray-700 mb-2">{comment.text}</p>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <span className="font-medium">{comment.author}</span>
-                    <span className="mx-2">•</span>
-                    <span>{comment.timestamp}</span>
+                  <div className="flex-1">
+                    <p className="text-gray-700 mb-2">{comment.text}</p>
+                    <div className="flex items-center text-sm text-gray-500">
+                      <span className="font-medium">{comment.author}</span>
+                      <span className="mx-2">•</span>
+                      <span>{comment.timestamp}</span>
+                    </div>
                   </div>
+
+                  {/* Delete Comment Button */}
+                  <button
+                    onClick={() => handleDeleteComment(comment.id)}
+                    disabled={deletingComment === comment.id}
+                    className="ml-4 p-2 text-red-600 hover:bg-red-50 rounded transition opacity-0 group-hover:opacity-100 disabled:opacity-50"
+                    title="Delete comment"
+                  >
+                    {deletingComment === comment.id ? (
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-600"></div>
+                    ) : (
+                      <Trash2 className="w-4 h-4" />
+                    )}
+                  </button>
                 </div>
               ))}
             </div>
