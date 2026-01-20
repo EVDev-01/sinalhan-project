@@ -5,6 +5,9 @@ const dotenv = require("dotenv");
 // Load environment variables
 dotenv.config();
 
+// Initialize database (this creates tables)
+require("./config/database");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -13,23 +16,26 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Basic route
+// Routes
+app.use("/api/questions", require("./routes/questions"));
+
+// Health check
 app.get("/api/health", (req, res) => {
   res.json({
     message: "Server is running!",
     timestamp: new Date().toISOString(),
+    database: "SQLite",
   });
 });
 
-// Example API route
-app.get("/api/test", (req, res) => {
-  res.json({ data: "This is test data from the server" });
-});
-
-// Error handling middleware
+// Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: "Something went wrong!" });
+  res.status(500).json({
+    success: false,
+    error: "Something went wrong!",
+    message: err.message,
+  });
 });
 
 // Start server
